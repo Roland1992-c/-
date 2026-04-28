@@ -1,0 +1,81 @@
+{
+  "products": [
+    {
+      "id": "p001",
+      "name": "智能蓝牙耳机 Pro",
+      "category": "电子产品",
+      "price": 299,
+      "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop",
+      "desc": "高品质智能蓝牙耳机，支持主动降噪，续航长达30小时。舒适佩戴，音质出色，适合日常通勤和运动使用。",
+      "sku": "BT-2024-PRO",
+      "badge": "热卖"
+    },
+    {
+      "id": "p002",
+      "name": "简约台灯 北欧风格",
+      "category": "家居用品",
+      "price": 189,
+      "image": "https://images.unsplash.com/photo-1507473885765-e6ed057ab6fe?w=400&h=400&fit=crop",
+      "desc": "北欧简约设计台灯，三档色温调节，护眼无频闪。适合书房、卧室使用，营造温馨氛围。",
+      "sku": "LAMP-N01",
+      "badge": "推荐"
+    },
+    {
+      "id": "p003",
+      "name": "有机绿茶 高山云雾",
+      "category": "食品饮料",
+      "price": 128,
+      "image": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=400&fit=crop",
+      "desc": "产自高山茶园的有机绿茶，手工采摘，清香回甘。每罐250g，送礼自用皆宜。",
+      "sku": "TEA-G2024",
+      "badge": "新品"
+    },
+    {
+      "id": "p004",
+      "name": "便携移动电源 20000mAh",
+      "category": "电子产品",
+      "price": 159,
+      "image": "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400&h=400&fit=crop",
+      "desc": "大容量20000mAh移动电源，支持快充，同时为三台设备充电。轻薄便携，出差旅行必备。",
+      "sku": "PB-20K",
+      "badge": ""
+    },
+    {
+      "id": "p005",
+      "name": "纯棉四件套 床品套装",
+      "category": "家居用品",
+      "price": 359,
+      "image": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400&h=400&fit=crop",
+      "desc": "100%纯棉面料，亲肤柔软，透气舒适。包含床单、被套、枕套*2，多种尺寸可选。",
+      "sku": "BED-SET01",
+      "badge": "热卖"
+    },
+    {
+      "id": "p006",
+      "name": "不锈钢保温杯 500ml",
+      "category": "生活用品",
+      "price": 89,
+      "image": "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400&h=400&fit=crop",
+      "desc": "304不锈钢内胆，12小时保温保冷。真空双层设计，防漏杯盖，适合办公户外使用。",
+      "sku": "CUP-SS500",
+      "badge": ""
+    },
+    {
+      "id": "p1777368679993_zza7",
+      "name": "桌子",
+      "category": "桌",
+      "price": 2999,
+      "sku": "cz03",
+      "image": "https://i.cetsteam.com/imgs/2026/04/28/ac6e07414930628f.jpg",
+      "desc": "",
+      "badge": ""
+    }
+  ],
+  "settings": {
+    "brandName": "产品图册",
+    "password": "admin888",
+    "remoteUrl": ""
+  },
+  "exportDate": "2026-04-28T09:38:11.974Z",
+  "version": "1.0"
+}
