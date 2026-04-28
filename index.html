@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="产品图册 - 在线查看产品详情与价格">
+    <!-- 微信分享优化 -->
+    <meta property="og:title" content="产品图册">
+    <meta property="og:description" content="查看最新产品详情与价格">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <title>产品图册</title>
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #1557b0;
+            --primary-light: #e8f0fe;
+            --accent: #ff6b35;
+            --bg: #f5f6f8;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --text-secondary: #5f6b7a;
+            --text-light: #8b95a5;
+            --border: #e8ecf1;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow: 0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
+            --radius: 14px;
+            --radius-sm: 10px;
+            --radius-xs: 6px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+                'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+        }
+
+        /* ========== 头部导航 ========== */
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+            padding: 14px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.01em;
+            cursor: default;
+            user-select: none;
+        }
+        .header-brand .logo-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-xs);
+            background: var(--primary);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+            white-space: nowrap;
+            font-family: var(--font-family);
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(26, 115, 232, 0.3);
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 4px 14px rgba(26, 115, 232, 0.4);
+            transform: translateY(-1px);
+        }
+        .btn-primary:active {
+            transform: scale(0.96);
+            box-shadow: 0 1px 4px rgba(26, 115, 232, 0.3);
+        }
+        .btn-outline {
+            background: #fff;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        .btn-outline:hover {
+            background: var(--primary-light);
+        }
+        .btn-outline:active {
+            transform: scale(0.96);
+        }
+        .btn-sm {
+            padding: 7px 14px;
+            font-size: 0.82rem;
+        }
+        .btn-xs {
+            padding: 5px 10px;
+            font-size: 0.75rem;
+            border-radius: 50px;
+        }
+        .btn-danger {
+            background: #e74c3c;
+            color: #fff;
+        }
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        .btn-success {
+            background: #27ae60;
+            color: #fff;
+        }
+        .btn-success:hover {
+            background: #1e8449;
+        }
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            border: none;
+            padding: 8px 12px;
+        }
+        .btn-ghost:hover {
+            background: #f0f2f5;
+            color: var(--text);
+        }
+
+        /* ========== 搜索栏 & 筛选 ========== */
+        .search-filter-bar {
+            padding: 16px 20px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .search-wrapper {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+        .search-wrapper input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            border-radius: 50px;
+            border: 2px solid var(--border);
+            font-size: 0.95rem;
+            font-family: var(--font-family);
+            background: #fff;
+            transition: var(--transition);
+            color: var(--text);
+            -webkit-appearance: none;
+        }
+        .search-wrapper input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.08);
+        }
+        .search-wrapper .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            pointer-events: none;
+            font-size: 1.1rem;
+        }
+        .category-tabs {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .category-tab {
+            padding: 9px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: 2px solid var(--border);
+            background: #fff;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            white-space: nowrap;
+            font-family: var(--font-family);
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        .category-tab:hover {
+            border-color: #c0c8d4;
+            color: var(--text);
+        }
+        .category-tab.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(26, 115, 232, 0.25);
+        }
+        .product-count {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        /* ========== 产品网格 ========== */
+        .products-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+            width: 100%;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 18px;
+        }
+        @media (max-width: 600px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            .search-filter-bar {
+                padding: 12px 14px;
+                gap: 8px;
+            }
+            .header {
+                padding: 10px 14px;
+            }
+            .header-brand {
+                font-size: 1rem;
+            }
+            .header-brand .logo-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
+            }
+            .btn {
+                padding: 8px 14px;
+                font-size: 0.8rem;
+            }
+            .category-tab {
+                padding: 7px 12px;
+                font-size: 0.78rem;
+            }
+            .products-container {
+                padding: 0 10px 30px;
+            }
+        }
+        @media (max-width: 380px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+        }
+
+        /* ========== 产品卡片 ========== */
+        .product-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border: 1px solid transparent;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        .product-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+            border-color: #dde3ed;
+        }
+        .product-card:active {
+            transform: scale(0.97);
+            box-shadow: var(--shadow-sm);
+        }
+        .product-card .card-img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            background: #f0f2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-card .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        .product-card:hover .card-img img {
+            transform: scale(1.05);
+        }
+        .product-card .card-img .placeholder-img {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #e8ecf1 0%, #dce2ea 100%);
+            color: #b0b9c5;
+            font-size: 3rem;
+            font-weight: 700;
+        }
+        .product-card .card-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 50px;
+            letter-spacing: 0.02em;
+            z-index: 2;
+            box-shadow: 0 2px 6px rgba(255, 107, 53, 0.35);
+        }
+        .product-card .card-body {
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+        }
+        .product-card .card-category {
+            font-size: 0.7rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+        .product-card .card-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .product-card .card-desc {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .product-card .card-price {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #e74c3c;
+            letter-spacing: -0.01em;
+            margin-top: auto;
+        }
+        .product-card .card-price .currency {
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* ========== 空状态 ========== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+            grid-column: 1 / -1;
+        }
+        .empty-state .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            opacity: 0.6;
+        }
+        .empty-state p {
+            font-size: 1rem;
+            margin: 4px 0;
+        }
+
+        /* ========== 产品详情弹窗 ========== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.2s ease;
+        }
+        .modal-overlay.closing {
+            animation: fadeOut 0.2s ease;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+        @keyframes slideUp {
+            from {
+                transform: translateY(40px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .modal-content {
+            background: #fff;
+            border-radius: var(--radius);
+            max-width: 560px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            animation: slideUp 0.3s ease;
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .modal-close:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .modal-img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            display: block;
+            border-radius: var(--radius) var(--radius) 0 0;
+            background: #f0f2f5;
+        }
+        .modal-img.placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #e8ecf1 0%, #dce2ea 100%);
+            font-size: 5rem;
+            color: #b0b9c5;
+        }
+        .modal-body {
+            padding: 20px 24px 24px;
+        }
+        .modal-body .modal-category {
+            font-size: 0.75rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .modal-body .modal-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .modal-body .modal-price {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #e74c3c;
+            margin-bottom: 12px;
+        }
+        .modal-body .modal-price .currency {
+            font-size: 1rem;
+        }
+        .modal-body .modal-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .modal-body .modal-sku {
+            font-size: 0.78rem;
+            color: var(--text-light);
+            margin-top: 8px;
+        }
+        @media (max-width: 600px) {
+            .modal-content {
+                max-width: 100%;
+                max-height: 90vh;
+                border-radius: var(--radius) var(--radius) 0 0;
+                margin-top: auto;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                border-radius: 18px 18px 0 0;
+            }
+            .modal-img {
+                border-radius: 18px 18px 0 0;
+                aspect-ratio: 16/10;
+            }
+            .modal-overlay {
+                align-items: flex-end;
+                padding: 0;
+            }
+            .modal-body {
+                padding: 16px 18px 20px;
+            }
+        }
+
+        /* ========== 管理面板 ========== */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: #f8f9fb;
+            overflow-y: auto;
+        }
+        .admin-panel.active {
+            display: block;
+            animation: fadeIn 0.25s ease;
+        }
+        .admin-header {
+            background: #1e293b;
+            color: #fff;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .admin-header h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+        .admin-header .btn {
+            font-size: 0.8rem;
+            padding: 7px 14px;
+        }
+        .admin-body {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            width: 100%;
+        }
+        .admin-section {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+        .admin-section h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: var(--text);
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            letter-spacing: 0.02em;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: var(--radius-xs);
+            border: 2px solid var(--border);
+            font-size: 0.9rem;
+            font-family: var(--font-family);
+            transition: var(--transition);
+            background: #fafbfc;
+            color: var(--text);
+            -webkit-appearance: none;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.06);
+            background: #fff;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+        .form-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .form-row .form-group {
+            flex: 1;
+            min-width: 140px;
+        }
+        .product-list-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .product-list-table th,
+        .product-list-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .product-list-table th {
+            background: #f8f9fb;
+            font-weight: 700;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            position: sticky;
+            top: 0;
+        }
+        .product-list-table tbody tr {
+            transition: var(--transition);
+        }
+        .product-list-table tbody tr:hover {
+            background: #fafcfd;
+        }
+        .product-list-table .actions-cell {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 700px) {
+            .product-list-table {
+                font-size: 0.75rem;
+            }
+            .product-list-table th,
+            .product-list-table td {
+                padding: 8px 6px;
+            }
+            .product-list-table .actions-cell {
+                gap: 3px;
+            }
+            .admin-body {
+                padding: 12px;
+            }
+            .admin-section {
+                padding: 14px 16px;
+            }
+            .btn-xs {
+                padding: 4px 7px;
+                font-size: 0.68rem;
+            }
+        }
+
+        /* ========== Toast 提示 ========== */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999;
+            background: #1e293b;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: var(--shadow-lg);
+            animation: slideDown 0.3s ease;
+            pointer-events: none;
+            font-family: var(--font-family);
+            letter-spacing: 0.02em;
+        }
+        .toast.success {
+            background: #27ae60;
+        }
+        .toast.error {
+            background: #e74c3c;
+        }
+        @keyframes slideDown {
+            from {
+                transform: translateX(-50%) translateY(-60px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* ========== 密码弹窗 ========== */
+        .password-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 350;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.2s ease;
+        }
+        .password-dialog {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            max-width: 380px;
+            width: 100%;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            animation: slideUp 0.3s ease;
+        }
+        .password-dialog h3 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+        .password-dialog p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+        .password-dialog input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 50px;
+            border: 2px solid var(--border);
+            font-size: 1rem;
+            text-align: center;
+            font-family: var(--font-family);
+            letter-spacing: 0.05em;
+            -webkit-appearance: none;
+        }
+        .password-dialog input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.08);
+        }
+        .password-dialog .btn {
+            margin-top: 14px;
+            width: 100%;
+        }
+        .password-dialog .btn-ghost {
+            margin-top: 6px;
+            width: auto;
+            font-size: 0.8rem;
+        }
+
+        /* ========== 页脚 ========== */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-light);
+            font-size: 0.78rem;
+            border-top: 1px solid var(--border);
+            margin-top: 20px;
+        }
+        .footer .admin-entry {
+            color: #c0c8d4;
+            cursor: pointer;
+            font-size: 0.7rem;
+            margin-top: 8px;
+            display: inline-block;
+            transition: color 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .footer .admin-entry:hover {
+            color: var(--text-light);
+        }
+
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d0d5dc;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b0b8c3;
+        }
+
+        /* 打印时隐藏管理相关 */
+        @media print {
+            .header-actions,
+            .footer .admin-entry,
+            .admin-panel,
+            .password-overlay,
+            .toast,
+            .modal-overlay {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== 头部导航 ==================== -->
+    <header class="header">
+        <div class="header-brand">
+            <div class="logo-icon">📦</div>
+            <span id="brandName">产品图册</span>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-outline btn-sm" onclick="refreshData()" title="刷新数据">
+                🔄 刷新
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="showPasswordDialog()" title="管理产品">
+                ⚙️ 管理
+            </button>
+        </div>
+    </header>
+
+    <!-- ==================== 搜索与筛选 ==================== -->
+    <div class="search-filter-bar">
+        <div class="search-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="搜索产品名称或描述..." oninput="renderProducts()">
+        </div>
+        <div class="category-tabs" id="categoryTabs">
+            <span class="category-tab active" data-category="all" onclick="setCategory('all', this)">全部</span>
+        </div>
+        <span class="product-count" id="productCount">0 件产品</span>
+    </div>
+
+    <!-- ==================== 产品列表 ==================== -->
+    <div class="products-container">
+        <div class="products-grid" id="productsGrid">
+            <!-- 动态渲染 -->
+        </div>
+    </div>
+
+    <!-- ==================== 产品详情弹窗 ==================== -->
+    <div class="modal-overlay" id="modalOverlay" style="display:none;" onclick="closeModal(event)">
+        <div class="modal-content" id="modalContent" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div id="modalImgContainer"></div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- ==================== 管理面板 ==================== -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h2>📋 产品管理面板</h2>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <button class="btn btn-success btn-sm" onclick="showAddProductForm()">＋ 添加产品</button>
+                <button class="btn btn-outline btn-sm" onclick="exportData()" style="background:#fff;color:#1e293b;border-color:#fff;">📥 导出数据</button>
+                <button class="btn btn-outline btn-sm" onclick="importDataPrompt()" style="background:#fff;color:#1e293b;border-color:#fff;">📤 导入数据</button>
+                <button class="btn btn-ghost btn-sm" onclick="closeAdminPanel()" style="color:#fff;">✕ 退出管理</button>
+            </div>
+        </div>
+        <div class="admin-body">
+            <!-- 产品列表 -->
+            <div class="admin-section">
+                <h3>📦 当前产品列表（共 <span id="adminProductCount">0</span> 件）</h3>
+                <div style="overflow-x:auto;">
+                    <table class="product-list-table">
+                        <thead>
+                            <tr>
+                                <th>图片</th>
+                                <th>名称</th>
+                                <th>分类</th>
+                                <th>价格</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminProductTableBody"></tbody>
+                    </table>
+                </div>
+                <p style="font-size:0.75rem;color:var(--text-light);margin-top:8px;">
+                    💡 提示：修改后数据自动保存在当前浏览器。导出JSON文件可备份或迁移数据。
+                </p>
+            </div>
+
+            <!-- 添加/编辑表单 -->
+            <div class="admin-section" id="adminFormSection" style="display:none;">
+                <h3 id="adminFormTitle">➕ 添加产品</h3>
+                <form id="adminProductForm" onsubmit="saveProduct(event)">
+                    <input type="hidden" id="formProductId" value="">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>产品名称 *</label>
+                            <input type="text" id="formName" required placeholder="输入产品名称">
+                        </div>
+                        <div class="form-group">
+                            <label>分类</label>
+                            <input type="text" id="formCategory" placeholder="如：电子产品、家居" list="categorySuggestions">
+                            <datalist id="categorySuggestions"></datalist>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>价格 (¥) *</label>
+                            <input type="number" id="formPrice" step="0.01" min="0" required placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label>SKU / 编号</label>
+                            <input type="text" id="formSku" placeholder="可选">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>图片URL</label>
+                        <input type="url" id="formImage" placeholder="https://... 留空则显示占位图">
+                    </div>
+                    <div class="form-group">
+                        <label>产品描述</label>
+                        <textarea id="formDesc" rows="3" placeholder="产品详细描述..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>标签（如：新品、热卖，留空则不显示）</label>
+                        <input type="text" id="formBadge" placeholder="如：新品、热卖、推荐">
+                    </div>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                        <button type="submit" class="btn btn-primary">💾 保存产品</button>
+                        <button type="button" class="btn btn-ghost" onclick="cancelEdit()">取消</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 设置 -->
+            <div class="admin-section">
+                <h3>🔧 设置</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>品牌名称</label>
+                        <input type="text" id="settingBrandName" value="产品图册" onchange="updateBrandName()">
+                    </div>
+                    <div class="form-group">
+                        <label>管理密码</label>
+                        <input type="text" id="settingPassword" value="" placeholder="设置管理密码" onchange="updatePassword()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>远程数据源URL（可选，优先加载此URL的JSON数据）</label>
+                    <input type="url" id="settingRemoteUrl" placeholder="https://example.com/products.json" onchange="updateRemoteUrl()">
+                    <p style="font-size:0.7rem;color:var(--text-light);">设置后页面将从此URL加载产品数据，实现真正的在线更新。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 密码弹窗 ==================== -->
+    <div class="password-overlay" id="passwordOverlay" style="display:none;">
+        <div class="password-dialog">
+            <h3>🔐 验证身份</h3>
+            <p>请输入管理密码以进入管理面板</p>
+            <input type="password" id="passwordInput" placeholder="请输入密码" onkeydown="if(event.key==='Enter')verifyPassword()">
+            <button class="btn btn-primary" onclick="verifyPassword()">确认进入</button>
+            <button class="btn btn-ghost" onclick="closePasswordDialog()">取消</button>
+        </div>
+    </div>
+
+    <!-- ==================== 页脚 ==================== -->
+    <div class="footer">
+        <p>© <span id="footerYear">2024</span> 产品图册 · 仅供查看</p>
+        <span class="admin-entry" onclick="showPasswordDialog()" title="管理入口">🔑 管理入口</span>
+    </div>
+
+    <!-- ==================== Toast容器 ==================== -->
+    <div id="toastContainer"></div>
+
+    <script>
+        (function() {
+            // ==================== 默认产品数据 ====================
+            const DEFAULT_PRODUCTS = [{
+                id: 'p001',
+                name: '智能蓝牙耳机 Pro',
+                category: '电子产品',
+                price: 299.00,
+                image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop',
+                desc: '高品质智能蓝牙耳机，支持主动降噪，续航长达30小时。舒适佩戴，音质出色，适合日常通勤和运动使用。',
+                sku: 'BT-2024-PRO',
+                badge: '热卖'
+            }, {
+                id: 'p002',
+                name: '简约台灯 北欧风格',
+                category: '家居用品',
+                price: 189.00,
+                image: 'https://images.unsplash.com/photo-1507473885765-e6ed057ab6fe?w=400&h=400&fit=crop',
+                desc: '北欧简约设计台灯，三档色温调节，护眼无频闪。适合书房、卧室使用，营造温馨氛围。',
+                sku: 'LAMP-N01',
+                badge: '推荐'
+            }, {
+                id: 'p003',
+                name: '有机绿茶 高山云雾',
+                category: '食品饮料',
+                price: 128.00,
+                image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=400&fit=crop',
+                desc: '产自高山茶园的有机绿茶，手工采摘，清香回甘。每罐250g，送礼自用皆宜。',
+                sku: 'TEA-G2024',
+                badge: '新品'
+            }, {
+                id: 'p004',
+                name: '便携移动电源 20000mAh',
+                category: '电子产品',
+                price: 159.00,
+                image: 'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400&h=400&fit=crop',
+                desc: '大容量20000mAh移动电源，支持快充，同时为三台设备充电。轻薄便携，出差旅行必备。',
+                sku: 'PB-20K',
+                badge: ''
+            }, {
+                id: 'p005',
+                name: '纯棉四件套 床品套装',
+                category: '家居用品',
+                price: 359.00,
+                image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400&h=400&fit=crop',
+                desc: '100%纯棉面料，亲肤柔软，透气舒适。包含床单、被套、枕套*2，多种尺寸可选。',
+                sku: 'BED-SET01',
+                badge: '热卖'
+            }, {
+                id: 'p006',
+                name: '不锈钢保温杯 500ml',
+                category: '生活用品',
+                price: 89.00,
+                image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400&h=400&fit=crop',
+                desc: '304不锈钢内胆，12小时保温保冷。真空双层设计，防漏杯盖，适合办公户外使用。',
+                sku: 'CUP-SS500',
+                badge: ''
+            }];
+
+            // ==================== 全局状态 ====================
+            let products = [...DEFAULT_PRODUCTS];
+            let currentCategory = 'all';
+            let adminPassword = 'admin888';
+            let brandName = '产品图册';
+            let remoteDataUrl = '';
+            let editingProductId = null;
+
+            // ==================== 初始化 ====================
+            function init() {
+                // 加载设置
+                const savedSettings = loadFromStorage('app_settings');
+                if (savedSettings) {
+                    adminPassword = savedSettings.password || 'admin888';
+                    brandName = savedSettings.brandName || '产品图册';
+                    remoteDataUrl = savedSettings.remoteUrl || '';
+                }
+
+                // 更新UI
+                document.getElementById('brandName').textContent = brandName;
+                document.getElementById('settingBrandName').value = brandName;
+                document.getElementById('settingPassword').value = adminPassword;
+                document.getElementById('settingRemoteUrl').value = remoteDataUrl;
+                document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+                // 加载产品数据
+                loadProducts();
+            }
+
+            function loadProducts() {
+                // 优先级1: localStorage中的产品数据
+                const localProducts = loadFromStorage('app_products');
+
+                // 优先级2: 尝试从远程URL加载
+                if (remoteDataUrl && !localProducts) {
+                    fetchRemoteData(remoteDataUrl, (data) => {
+                        if (data && Array.isArray(data) && data.length > 0) {
+                            products = data;
+                            saveToStorage('app_products', products);
+                            finishInit();
+                        } else if (localProducts) {
+                            products = localProducts;
+                            finishInit();
+                        } else {
+                            products = [...DEFAULT_PRODUCTS];
+                            finishInit();
+                        }
+                    }, () => {
+                        // 远程加载失败，使用本地数据
+                        if (localProducts) {
+                            products = localProducts;
+                        } else {
+                            products = [...DEFAULT_PRODUCTS];
+                        }
+                        finishInit();
+                    });
+                } else if (localProducts) {
+                    products = localProducts;
+                    finishInit();
+                } else {
+                    products = [...DEFAULT_PRODUCTS];
+                    finishInit();
+                }
+
+                // 如果没有远程URL，直接完成初始化
+                if (!remoteDataUrl || loadFromStorage('app_products')) {
+                    if (!remoteDataUrl) {
+                        const lp = loadFromStorage('app_products');
+                        products = lp || [...DEFAULT_PRODUCTS];
+                    }
+                    finishInit();
+                }
+            }
+
+            function finishInit() {
+                renderCategoryTabs();
+                renderProducts();
+                renderAdminTable();
+                updateProductCount();
+                updateCategorySuggestions();
+            }
+
+            function fetchRemoteData(url, onSuccess, onError) {
+                if (!url) {
+                    if (onError) onError();
+                    return;
+                }
+                fetch(url, { cache: 'no-cache' })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Network error');
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (onSuccess) onSuccess(data);
+                    })
+                    .catch(() => {
+                        if (onError) onError();
+                    });
+            }
+
+            // ==================== 渲染产品列表 ====================
+            function renderProducts() {
+                const grid = document.getElementById('productsGrid');
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+
+                let filtered = products;
+
+                // 分类筛选
+                if (currentCategory !== 'all') {
+                    filtered = filtered.filter(p => p.category === currentCategory);
+                }
+
+                // 搜索筛选
+                if (searchTerm) {
+                    filtered = filtered.filter(p =>
+                        p.name.toLowerCase().includes(searchTerm) ||
+                        (p.desc && p.desc.toLowerCase().includes(searchTerm)) ||
+                        (p.sku && p.sku.toLowerCase().includes(searchTerm)) ||
+                        (p.category && p.category.toLowerCase().includes(searchTerm))
+                    );
+                }
+
+                if (filtered.length === 0) {
+                    grid.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">📭</div>
+                            <p><strong>没有找到匹配的产品</strong></p>
+                            <p>尝试调整搜索条件或筛选分类</p>
+                        </div>`;
+                } else {
+                    grid.innerHTML = filtered.map(p => createProductCard(p)).join('');
+                }
+
+                updateProductCount(filtered.length);
+            }
+
+            function createProductCard(product) {
+                const priceFormatted = parseFloat(product.price).toFixed(2);
+                const badgeHtml = product.badge ?
+                    `<span class="card-badge">${escapeHtml(product.badge)}</span>` :
+                    '';
+                const imgHtml = product.image ?
+                    `<img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.placeholder-img').style.display='flex';">` +
+                    `<div class="placeholder-img" style="display:none;">${escapeHtml(product.name.charAt(0))}</div>` :
+                    `<div class="placeholder-img">${escapeHtml(product.name.charAt(0))}</div>`;
+
+                return `
+                <div class="product-card" onclick="openProductDetail('${product.id}')" title="点击查看详情">
+                    <div class="card-img">
+                        ${imgHtml}
+                        ${badgeHtml}
+                    </div>
+                    <div class="card-body">
+                        <span class="card-category">${escapeHtml(product.category || '未分类')}</span>
+                        <div class="card-name">${escapeHtml(product.name)}</div>
+                        ${product.desc ? `<div class="card-desc">${escapeHtml(product.desc)}</div>` : ''}
+                        <div class="card-price"><span class="currency">¥</span>${priceFormatted}</div>
+                    </div>
+                </div>`;
+            }
+
+            // ==================== 产品详情弹窗 ====================
+            function openProductDetail(productId) {
+                const product = products.find(p => p.id === productId);
+                if (!product) return;
+
+                const overlay = document.getElementById('modalOverlay');
+                const imgContainer = document.getElementById('modalImgContainer');
+                const body = document.getElementById('modalBody');
+                const priceFormatted = parseFloat(product.price).toFixed(2);
+
+                if (product.image) {
+                    imgContainer.innerHTML =
+                        `<img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" class="modal-img" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\\'modal-img placeholder\\'>${escapeHtml(product.name.charAt(0))}</div>';">`;
+                } else {
+                    imgContainer.innerHTML =
+                        `<div class="modal-img placeholder">${escapeHtml(product.name.charAt(0))}</div>`;
+                }
+
+                body.innerHTML = `
+                    ${product.category ? `<div class="modal-category">${escapeHtml(product.category)}</div>` : ''}
+                    <div class="modal-name">${escapeHtml(product.name)}</div>
+                    <div class="modal-price"><span class="currency">¥</span>${priceFormatted}</div>
+                    ${product.desc ? `<div class="modal-desc">${escapeHtml(product.desc)}</div>` : ''}
+                    ${product.sku ? `<div class="modal-sku">编号：${escapeHtml(product.sku)}</div>` : ''}
+                    ${product.badge ? `<div style="margin-top:8px;"><span style="background:#ff6b35;color:#fff;padding:4px 12px;border-radius:50px;font-size:0.75rem;font-weight:600;">${escapeHtml(product.badge)}</span></div>` : ''}
+                `;
+
+                overlay.style.display = 'flex';
+                overlay.classList.remove('closing');
+                document.body.style.overflow = 'hidden';
+
+                // 移动端底部弹出
+                if (window.innerWidth <= 600) {
+                    overlay.style.alignItems = 'flex-end';
+                    overlay.style.padding = '0';
+                } else {
+                    overlay.style.alignItems = 'center';
+                    overlay.style.padding = '20px';
+                }
+            }
+
+            function closeModal(event) {
+                const overlay = document.getElementById('modalOverlay');
+                if (event && event.target !== overlay) return;
+                overlay.classList.add('closing');
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    overlay.classList.remove('closing');
+                    document.body.style.overflow = '';
+                }, 180);
+            }
+
+            // 监听ESC关闭
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const overlay = document.getElementById('modalOverlay');
+                    if (overlay.style.display !== 'none') {
+                        closeModal();
+                    }
+                    const pwOverlay = document.getElementById('passwordOverlay');
+                    if (pwOverlay.style.display !== 'none') {
+                        closePasswordDialog();
+                    }
+                }
+            });
+
+            // ==================== 分类筛选 ====================
+            function setCategory(category, tabElement) {
+                currentCategory = category;
+                document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                if (tabElement) tabElement.classList.add('active');
+                document.getElementById('searchInput').value = '';
+                renderProducts();
+            }
+
+            function renderCategoryTabs() {
+                const tabsContainer = document.getElementById('categoryTabs');
+                const categories = [...new Set(products.map(p => p.category).filter(Boolean))];
+                let html = '<span class="category-tab active" data-category="all" onclick="setCategory(\'all\', this)">全部</span>';
+                categories.forEach(cat => {
+                    html +=
+                        `<span class="category-tab" data-category="${escapeHtml(cat)}" onclick="setCategory('${escapeHtml(cat)}', this)">${escapeHtml(cat)}</span>`;
+                });
+                tabsContainer.innerHTML = html;
+                if (currentCategory !== 'all') {
+                    const activeTab = tabsContainer.querySelector(`[data-category="${escapeHtml(currentCategory)}"]`);
+                    if (activeTab) activeTab.classList.add('active');
+                    else {
+                        tabsContainer.querySelector('[data-category="all"]').classList.add('active');
+                        currentCategory = 'all';
+                    }
+                }
+            }
+
+            function updateProductCount(filteredCount) {
+                const count = filteredCount !== undefined ? filteredCount : products.length;
+                document.getElementById('productCount').textContent = `${count} 件产品`;
+            }
+
+            // ==================== 管理面板 ====================
+            function showPasswordDialog() {
+                document.getElementById('passwordOverlay').style.display = 'flex';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closePasswordDialog() {
+                document.getElementById('passwordOverlay').style.display = 'none';
+                document.body.style.overflow = '';
+            }
+
+            function verifyPassword() {
+                const input = document.getElementById('passwordInput').value.trim();
+                if (input === adminPassword) {
+                    closePasswordDialog();
+                    openAdminPanel();
+                } else {
+                    showToast('密码错误，请重试', 'error');
+                    document.getElementById('passwordInput').value = '';
+                    document.getElementById('passwordInput').focus();
+                }
+            }
+
+            function openAdminPanel() {
+                document.getElementById('adminPanel').classList.add('active');
+                document.body.style.overflow = 'hidden';
+                renderAdminTable();
+                updateCategorySuggestions();
+                document.getElementById('adminProductCount').textContent = products.length;
+                document.getElementById('settingBrandName').value = brandName;
+                document.getElementById('settingPassword').value = adminPassword;
+                document.getElementById('settingRemoteUrl').value = remoteDataUrl;
+            }
+
+            function closeAdminPanel() {
+                document.getElementById('adminPanel').classList.remove('active');
+                document.body.style.overflow = '';
+                cancelEdit();
+                // 刷新展示页面
+                renderCategoryTabs();
+                renderProducts();
+            }
+
+            function renderAdminTable() {
+                const tbody = document.getElementById('adminProductTableBody');
+                document.getElementById('adminProductCount').textContent = products.length;
+                if (products.length === 0) {
+                    tbody.innerHTML =
+                        `<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--text-light);">暂无产品，点击"添加产品"开始</td></tr>`;
+                } else {
+                    tbody.innerHTML = products.map((p, index) => `
+                        <tr>
+                            <td>
+                                ${p.image 
+                                    ? `<img src="${escapeHtml(p.image)}" alt="" style="width:40px;height:40px;object-fit:cover;border-radius:6px;" onerror="this.style.display='none';">` 
+                                    : `<div style="width:40px;height:40px;border-radius:6px;background:#e8ecf1;display:flex;align-items:center;justify-content:center;font-weight:700;color:#b0b9c5;font-size:0.8rem;">${escapeHtml(p.name.charAt(0))}</div>`}
+                            </td>
+                            <td><strong>${escapeHtml(p.name)}</strong></td>
+                            <td>${escapeHtml(p.category || '-')}</td>
+                            <td>¥${parseFloat(p.price).toFixed(2)}</td>
+                            <td class="actions-cell">
+                                <button class="btn btn-primary btn-xs" onclick="editProduct('${p.id}')">✏️ 编辑</button>
+                                <button class="btn btn-danger btn-xs" onclick="deleteProduct('${p.id}')">🗑 删除</button>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            }
+
+            function showAddProductForm() {
+                editingProductId = null;
+                document.getElementById('adminFormSection').style.display = 'block';
+                document.getElementById('adminFormTitle').textContent = '➕ 添加产品';
+                document.getElementById('formProductId').value = '';
+                document.getElementById('formName').value = '';
+                document.getElementById('formCategory').value = '';
+                document.getElementById('formPrice').value = '';
+                document.getElementById('formSku').value = '';
+                document.getElementById('formImage').value = '';
+                document.getElementById('formDesc').value = '';
+                document.getElementById('formBadge').value = '';
+                document.getElementById('formName').focus();
+                updateCategorySuggestions();
+                // 滚动到表单
+                document.getElementById('adminFormSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            function editProduct(productId) {
+                const product = products.find(p => p.id === productId);
+                if (!product) return;
+                editingProductId = productId;
+                document.getElementById('adminFormSection').style.display = 'block';
+                document.getElementById('adminFormTitle').textContent = '✏️ 编辑产品';
+                document.getElementById('formProductId').value = product.id;
+                document.getElementById('formName').value = product.name;
+                document.getElementById('formCategory').value = product.category || '';
+                document.getElementById('formPrice').value = product.price;
+                document.getElementById('formSku').value = product.sku || '';
+                document.getElementById('formImage').value = product.image || '';
+                document.getElementById('formDesc').value = product.desc || '';
+                document.getElementById('formBadge').value = product.badge || '';
+                updateCategorySuggestions();
+                document.getElementById('adminFormSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                document.getElementById('formName').focus();
+            }
+
+            function cancelEdit() {
+                editingProductId = null;
+                document.getElementById('adminFormSection').style.display = 'none';
+                document.getElementById('adminProductForm').reset();
+            }
+
+            function saveProduct(event) {
+                event.preventDefault();
+                const name = document.getElementById('formName').value.trim();
+                const category = document.getElementById('formCategory').value.trim();
+                const price = parseFloat(document.getElementById('formPrice').value);
+                const sku = document.getElementById('formSku').value.trim();
+                const image = document.getElementById('formImage').value.trim();
+                const desc = document.getElementById('formDesc').value.trim();
+                const badge = document.getElementById('formBadge').value.trim();
+
+                if (!name || isNaN(price) || price < 0) {
+                    showToast('请填写产品名称和有效价格', 'error');
+                    return;
+                }
+
+                if (editingProductId) {
+                    // 编辑模式
+                    const index = products.findIndex(p => p.id === editingProductId);
+                    if (index >= 0) {
+                        products[index] = {
+                            ...products[index],
+                            name,
+                            category,
+                            price,
+                            sku,
+                            image,
+                            desc,
+                            badge
+                        };
+                        showToast('产品已更新！', 'success');
+                    }
+                } else {
+                    // 添加模式
+                    const newId = 'p' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+                    products.push({
+                        id: newId,
+                        name,
+                        category,
+                        price,
+                        sku,
+                        image,
+                        desc,
+                        badge
+                    });
+                    showToast('产品已添加！', 'success');
+                }
+
+                // 保存数据
+                saveToStorage('app_products', products);
+                editingProductId = null;
+                document.getElementById('adminFormSection').style.display = 'none';
+                document.getElementById('adminProductForm').reset();
+                renderAdminTable();
+                renderCategoryTabs();
+                renderProducts();
+                document.getElementById('adminProductCount').textContent = products.length;
+                updateCategorySuggestions();
+            }
+
+            function deleteProduct(productId) {
+                const product = products.find(p => p.id === productId);
+                if (!product) return;
+                if (confirm(`确定要删除产品「${product.name}」吗？此操作不可恢复。`)) {
+                    products = products.filter(p => p.id !== productId);
+                    saveToStorage('app_products', products);
+                    renderAdminTable();
+                    renderCategoryTabs();
+                    renderProducts();
+                    document.getElementById('adminProductCount').textContent = products.length;
+                    updateCategorySuggestions();
+                    if (editingProductId === productId) cancelEdit();
+                    showToast('产品已删除', 'success');
+                }
+            }
+
+            function updateCategorySuggestions() {
+                const datalist = document.getElementById('categorySuggestions');
+                const categories = [...new Set(products.map(p => p.category).filter(Boolean))];
+                datalist.innerHTML = categories.map(c => `<option value="${escapeHtml(c)}">`).join('');
+                document.getElementById('adminProductCount').textContent = products.length;
+            }
+
+            // ==================== 数据导出/导入 ====================
+            function exportData() {
+                const data = {
+                    products: products,
+                    settings: {
+                        brandName: brandName,
+                        password: adminPassword,
+                        remoteUrl: remoteDataUrl
+                    },
+                    exportDate: new Date().toISOString(),
+                    version: '1.0'
+                };
+                const jsonStr = JSON.stringify(data, null, 2);
+                const blob = new Blob([jsonStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `产品图册_备份_${new Date().toISOString().slice(0,10)}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showToast('数据已导出！', 'success');
+            }
+
+            function importDataPrompt() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.json';
+                input.onchange = function(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = function(ev) {
+                        try {
+                            const data = JSON.parse(ev.target.result);
+                            if (data.products && Array.isArray(data.products)) {
+                                if (confirm(
+                                        `即将导入 ${data.products.length} 件产品。这将覆盖当前所有产品数据，确定继续？`
+                                        )) {
+                                    products = data.products;
+                                    saveToStorage('app_products', products);
+                                    if (data.settings) {
+                                        if (data.settings.brandName) {
+                                            brandName = data.settings.brandName;
+                                            document.getElementById('brandName').textContent = brandName;
+                                            document.getElementById('settingBrandName').value = brandName;
+                                        }
+                                        if (data.settings.password) {
+                                            adminPassword = data.settings.password;
+                                            document.getElementById('settingPassword').value = adminPassword;
+                                        }
+                                        if (data.settings.remoteUrl !== undefined) {
+                                            remoteDataUrl = data.settings.remoteUrl;
+                                            document.getElementById('settingRemoteUrl').value = remoteDataUrl;
+                                        }
+                                        saveSettings();
+                                    }
+                                    renderAdminTable();
+                                    renderCategoryTabs();
+                                    renderProducts();
+                                    updateCategorySuggestions();
+                                    document.getElementById('adminProductCount').textContent = products
+                                        .length;
+                                    showToast('数据导入成功！', 'success');
+                                }
+                            } else {
+                                showToast('文件格式不正确，缺少产品数据', 'error');
+                            }
+                        } catch (err) {
+                            showToast('文件解析失败，请检查JSON格式', 'error');
+                        }
+                    };
+                    reader.readAsText(file);
+                };
+                input.click();
+            }
+
+            // ==================== 设置更新 ====================
+            function updateBrandName() {
+                brandName = document.getElementById('settingBrandName').value.trim() || '产品图册';
+                document.getElementById('brandName').textContent = brandName;
+                saveSettings();
+            }
+
+            function updatePassword() {
+                const newPw = document.getElementById('settingPassword').value.trim();
+                if (newPw && newPw.length >= 3) {
+                    adminPassword = newPw;
+                    saveSettings();
+                    showToast('密码已更新', 'success');
+                } else if (newPw === '') {
+                    // 恢复默认
+                    adminPassword = 'admin888';
+                    document.getElementById('settingPassword').value = 'admin888';
+                    saveSettings();
+                } else {
+                    showToast('密码至少需要3个字符', 'error');
+                    document.getElementById('settingPassword').value = adminPassword;
+                }
+            }
+
+            function updateRemoteUrl() {
+                remoteDataUrl = document.getElementById('settingRemoteUrl').value.trim();
+                saveSettings();
+                if (remoteDataUrl) {
+                    showToast('远程数据源URL已设置。下次加载页面时将尝试从该URL获取数据。', 'success');
+                }
+            }
+
+            function saveSettings() {
+                const settings = {
+                    password: adminPassword,
+                    brandName: brandName,
+                    remoteUrl: remoteDataUrl
+                };
+                saveToStorage('app_settings', settings);
+            }
+
+            function refreshData() {
+                if (remoteDataUrl) {
+                    showToast('正在从远程数据源刷新...', 'success');
+                    fetchRemoteData(remoteDataUrl, (data) => {
+                        if (data && Array.isArray(data) && data.length > 0) {
+                            products = data;
+                            saveToStorage('app_products', products);
+                            renderCategoryTabs();
+                            renderProducts();
+                            updateCategorySuggestions();
+                            showToast(`已刷新，共 ${data.length} 件产品`, 'success');
+                        } else {
+                            showToast('远程数据为空，使用本地数据', 'error');
+                        }
+                    }, () => {
+                        showToast('远程加载失败，使用本地缓存数据', 'error');
+                    });
+                } else {
+                    // 从localStorage重新加载
+                    const local = loadFromStorage('app_products');
+                    if (local) {
+                        products = local;
+                        renderCategoryTabs();
+                        renderProducts();
+                        updateCategorySuggestions();
+                        showToast('已从本地缓存刷新', 'success');
+                    } else {
+                        products = [...DEFAULT_PRODUCTS];
+                        saveToStorage('app_products', products);
+                        renderCategoryTabs();
+                        renderProducts();
+                        updateCategorySuggestions();
+                        showToast('已恢复默认数据', 'success');
+                    }
+                }
+            }
+
+            // ==================== 工具函数 ====================
+            function saveToStorage(key, data) {
+                try {
+                    localStorage.setItem('product_catalog_' + key, JSON.stringify(data));
+                } catch (e) {
+                    // localStorage满了
+                    showToast('存储空间不足，请清理旧数据', 'error');
+                }
+            }
+
+            function loadFromStorage(key) {
+                try {
+                    const raw = localStorage.getItem('product_catalog_' + key);
+                    return raw ? JSON.parse(raw) : null;
+                } catch (e) {
+                    return null;
+                }
+            }
+
+            function escapeHtml(str) {
+                if (!str) return '';
+                const div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
+            }
+
+            function showToast(message, type = '') {
+                const container = document.getElementById('toastContainer');
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.textContent = message;
+                container.appendChild(toast);
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transition = 'opacity 0.3s ease';
+                    setTimeout(() => toast.remove(), 300);
+                }, 2200);
+            }
+
+            // ==================== 全局函数暴露 ====================
+            window.setCategory = setCategory;
+            window.openProductDetail = openProductDetail;
+            window.closeModal = closeModal;
+            window.showPasswordDialog = showPasswordDialog;
+            window.closePasswordDialog = closePasswordDialog;
+            window.verifyPassword = verifyPassword;
+            window.closeAdminPanel = closeAdminPanel;
+            window.showAddProductForm = showAddProductForm;
+            window.editProduct = editProduct;
+            window.deleteProduct = deleteProduct;
+            window.saveProduct = saveProduct;
+            window.cancelEdit = cancelEdit;
+            window.exportData = exportData;
+            window.importDataPrompt = importDataPrompt;
+            window.updateBrandName = updateBrandName;
+            window.updatePassword = updatePassword;
+            window.updateRemoteUrl = updateRemoteUrl;
+            window.refreshData = refreshData;
+
+            // ==================== 启动应用 ====================
+            init();
+
+            // 如果URL中有远程数据源参数，优先使用
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlRemoteData = urlParams.get('dataUrl');
+            if (urlRemoteData && !remoteDataUrl) {
+                remoteDataUrl = urlRemoteData;
+                document.getElementById('settingRemoteUrl').value = remoteDataUrl;
+                saveSettings();
+                // 重新加载
+                fetchRemoteData(remoteDataUrl, (data) => {
+                    if (data && Array.isArray(data) && data.length > 0) {
+                        products = data;
+                        saveToStorage('app_products', products);
+                    }
+                    finishInit();
+                }, () => {
+                    finishInit();
+                });
+            }
+
+            console.log('✅ 产品图册已就绪');
+            console.log('   - 产品数量:', products.length);
+            console.log('   - 管理密码:', adminPassword);
+            console.log('   - 远程数据源:', remoteDataUrl || '未设置');
+            console.log('   - 💡 点击页面底部的「管理入口」或顶部「管理」按钮进入管理面板');
+            console.log('   - 📱 通过微信分享链接即可让客户查看产品');
+            console.log('   - 📥 在管理面板可导出/导入数据实现备份迁移');
+            console.log('   - 🌐 设置远程JSON数据源可实现真正的在线更新');
+        })();
+    </script>
+</body>
+</html>
