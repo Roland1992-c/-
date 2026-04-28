@@ -1,5 +1,4 @@
-{
-  "products": [
+ [
     {
       "id": "p001",
       "name": "智能蓝牙耳机 Pro",
@@ -70,12 +69,4 @@
       "desc": "",
       "badge": ""
     }
-  ],
-  "settings": {
-    "brandName": "产品图册",
-    "password": "admin888",
-    "remoteUrl": ""
-  },
-  "exportDate": "2026-04-28T09:38:11.974Z",
-  "version": "1.0"
-}
+  ]
